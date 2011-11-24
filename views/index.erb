@@ -12,7 +12,7 @@
     <span class="env <%= status_of('P13N_08_WebDriverTests') %>">P13N <span class="health"><%= @status.health %>%</span></span>
     <ol>
       <li class="upstream">
-        <span class="env <%= status_of('P13N_02_Build_Gradle') %>">Commit</span>
+        <span class="env <%= status_of('P13N_02_Build_Gradle') %>">Commit<span class="health"> <%= @status.health %>%</span></span>
         <span class="people">
           <% @status.commiters.each do |name| %>
             <img src="/images/<%=name%>.jpg"/>
@@ -22,7 +22,7 @@
         <span class="commit-message"><%= @status.commit_message %></span>
       </li>
       <li class="upstream">
-        <span class="env <%= status_of('P13N_08_WebDriverTests') %>">WebDriver</span>
+        <span class="env <%= status_of('P13N_08_WebDriverTests') %>">WebDriver<span class="health"><%= @status.health %>%</span></span>
         <span class="people">
           <% @status.commiters.each do |name| %>
             <img src="/images/<%=name%>.jpg"/>
@@ -43,4 +43,8 @@
   </div>
 </div>
 </body>
+<!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>')</script>
+<script defer src="js/global.js"></script>
 </html>
