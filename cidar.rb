@@ -3,69 +3,66 @@ require 'open-uri'
 require 'sinatra' 
 require 'json'
 
-
-SERVER_URL = 'http://172.18.20.31:8153/go/cctray.xml'
-CLOJURE_SERVER_URL = 'http://172.18.20.40:9876'
-
-get '/git/*' do
-  url = CLOJURE_SERVER_URL + request.url.scan(/git(\/.*)/).first.first
-  open(url).read
-end
+JENKINS_URL = 'http://ci.lhotse.ov.otto.de:8080/view/p13n/job/'
 
 get '/' do
-  @doc = Nokogiri::XML(open(SERVER_URL))
   erb :index
 end
 
 helpers do
   def status_of(project)
-    # puts "getting status for #{project}."    
-    @status = Status.new(@doc.xpath(".//Project[regex(., '^#{project}$')]", Class.new {
-      def regex node_set, regex
-        node_set.find_all { |node| node['name'] =~ /#{regex}/ }
-      end
-    }.new))
+    summary = JSON.parse(open(JENKINS_URL + project + '/api/json').read)
+    detail = JSON.parse(open(JENKINS_URL + project + '/lastBuild/api/json').read)
+    @status = Status.new(summary, detail)
     erb 'status <%= if @status.success? then "success" else "failure" end %><%= " building" if @status.building? %>'
   end
+
 end
 
 class Status
-  def initialize(nodes)
-    # puts "nodes: #{nodes}"    
-    @nodes = nodes
+  def initialize(summary, detail)
+    @summary = summary
+    @detail = detail
   end
   
   def success?
-    @nodes.all? { |node| node['lastBuildStatus'] == "Success" }
+    @detail['result'] == "SUCCESS"
   end
   
   def building?
-    @nodes.any? { |node| node['activity'] == "Building" }
+    @detail['building']
   end
   
   def buildLabel
-    strip_runs @nodes.first['lastBuildLabel']
+    buildNumber = @summary['lastBuild'] && @summary['lastBuild']['number']
+    '#' + buildNumber.to_s + ' ' + (commiter_names() && commiter_names().first()).to_s
   end
   
   def commit_message
-    get_commit_message_from(@nodes.first['webUrl'])  
+    @detail['changeSet']['items'].last()['comment']
   end
   
   def commiters
-    commitersJson = open(URI.escape(CLOJURE_SERVER_URL + '/commiters.json?message="' + commit_message + '"')).read
-    JSON.parse(commitersJson).take(2)
+    knownNames = commiter_names & knownPeople
+    if (!(commiter_names - knownNames).empty?)
+      knownNames << "unknown"
+    end
+    knownNames
   end
-  
-  
+
+  def health
+    stability = @summary['healthReport'].select {|entry| entry ['description'] =~ /Build stability/}
+    stability && stability.last()['score']
+  end
+
   private
-  def strip_runs(buildLabel)
-    buildLabel.gsub(/\s.*/, '')
+
+  def commiter_names()
+    @detail['changeSet']['items'].collect{|commit| commit['author']['fullName']}.uniq
   end
-  
-  def get_commit_message_from(url)
-    web_html = Nokogiri::HTML(open(url))
-    comments = web_html.css(".comment dl dd")
-    return (comments && comments.length > 0) ? comments.first.text : ""
+
+  def knownPeople()
+    ['richard']
   end
-  
+
 end

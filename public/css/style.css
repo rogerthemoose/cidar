@@ -48,6 +48,11 @@ body {
   margin-left: 5px;    
 }
 
+.health {
+    font-size: 35px;
+    color: #00FF00
+}
+
 .details {
   font-size: 35px;
   color: #F5B800;
