@@ -1,13 +1,8 @@
-require 'nokogiri'
 require 'open-uri'
 require 'sinatra'
 require 'json'
 
 URL = 'http://ci.lhotse.ov.otto.de:8080/view/'
-
-get '/' do
-  erb :index
-end
 
 get '/p13n' do
   erb :p13n
