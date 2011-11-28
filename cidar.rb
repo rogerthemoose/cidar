@@ -97,7 +97,13 @@ class Job
   end
 
   def knownPeople()
-    ['richard', 'Fabian Koehler', 'Christian Stamm']
+    get_all_image_file_names() - ['unknown']
+  end
+
+  def get_all_image_file_names()
+    images = []
+    Dir.entries('public/images').each { |image| images << image[0..-5] }
+    images
   end
 
 end
