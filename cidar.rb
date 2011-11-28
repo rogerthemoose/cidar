@@ -97,7 +97,7 @@ class Job
   end
 
   def knownPeople()
-    ['richard', 'Fabian Koehler']
+    ['richard', 'Fabian Koehler', 'Christian Stamm']
   end
 
 end
