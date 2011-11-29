@@ -11,7 +11,7 @@ end
 helpers do
   def status_for(project)
     @info = Info.new(project)
-    erb 'status <%= if @info.success? then "success" else "failure" end %><%= " building" if @info.building? %>'
+    erb 'status <%= @info.status %>'
   end
 end
 
@@ -41,6 +41,9 @@ class Info
     jobs.inject(false) { |result, job| result || job.building? }
   end
 
+  def status
+    building? ? "building" : (success? ? "success" : "failure")
+  end
 
 end
 
@@ -65,7 +68,7 @@ class Job
   end
 
   def status?
-    'status' + (success? ? ' success' : ' failure ') + (building? ? ' building' : '')
+    "status " + (building? ? "building" : (success? ? "success" : "failure"))
   end
 
   def success?

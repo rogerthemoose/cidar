@@ -63,7 +63,7 @@ body {
 
 .health {
     font-size: 35px;
-    color: #00FF00
+    color: #F5B800;
 }
 
 .details {
@@ -96,6 +96,10 @@ body {
 
 .failure {
     color: #FF0000;
+}
+
+.building {
+    color: #3333FF;
 }
 
 .building {
