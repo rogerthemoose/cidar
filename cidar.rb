@@ -45,6 +45,10 @@ class Info
     building? ? "building" : (success? ? "success" : "failure")
   end
 
+  def commiters
+    jobs.inject([]) { |result, job| result += job.commiters}.uniq
+  end
+
 end
 
 class Job
@@ -82,6 +86,13 @@ class Job
   def commit_message
     if (!@detail['changeSet']['items'].empty?)
       @detail['changeSet']['items'].last()['comment']
+    end
+  end
+
+  def commit_time(fmt)
+    if (!@detail['changeSet']['items'].empty?)
+      time = Time.parse(@detail['changeSet']['items'].last()['date']).strftime(fmt)
+      time ? "@ " + time.to_s : ""
     end
   end
 

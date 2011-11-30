@@ -9,22 +9,23 @@
 <body>
 <div id="container">
   <div class="status-box small">
-    <span class="heading env <%= status_for('p13n') %>"><%= @info.name %></span>
+    <span class="heading env <%= status_for('p13n') %>"></span>
+    <div class="committers">
+          <span class="people">
+            <% @info.commiters.each do |name| %>
+              <img src="/images/<%= name %>.jpg"/>
+            <% end %>
+          </span>
+    </div>
     <ol>
       <% for @job in @info.jobs %>
           <li class="upstream">
             <div class="jobDetails">
               <span class="env <%= @job.status? %>">
-                <%= @job.name %><span class="health"> <%= @job.health %>%</span></span>
-              <span class="details"><%= @job.buildLabel %></span>
-              <span class="commit-message"><%= @job.commit_message %></span>
-            </div>
-            <div class="committers">
-              <span class="people">
-                <% @job.commiters.each do |name| %>
-                  <img src="/images/<%= name %>.jpg"/>
-                <% end %>
+                <%= @job.name %><span class="health"> <%= @job.health %>%</span>
               </span>
+              <span class="details"><%= @job.buildLabel %> <%= @job.commit_time('%H:%M:%S %Y-%m-%d') %></span>
+              <span class="commit-message"><%= @job.commit_message %></span>
             </div>
           </li>
       <% end %>

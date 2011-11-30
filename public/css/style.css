@@ -1,5 +1,9 @@
+/* @override http://localhost:4567/css/style.css */
+
+/* @override http://localhost:4567/css/style.css */
+
 @-webkit-keyframes pulse {
- from { opacity: 0; }
+ from { opacity: 0.2; }
  to { opacity: 1.0; }
 }
 
@@ -7,12 +11,8 @@ body {
     color: #333333;
     background: #111111 none repeat scroll 0% 0%;
     font-family: Helvetica;
-    margin: 0px;
+    margin: 10px;
     width: 100%;
-}
-
-.status-box {
-    border-bottom: 4px dotted #333333;
 }
 
 .jobDetails {
@@ -20,17 +20,11 @@ body {
 }
 
 .committers {
-    float: right;
-}
-
-.status-box + .small {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    float: left;
 }
 
 .status-box ol {
     list-style-type: none;
-    margin: 0;
     padding: 0;
 }
 
@@ -43,47 +37,36 @@ body {
 }
 
 .heading {
-    text-transform: uppercase;
+    float: left;
+    height: 150px;
+    width: 150px;
+
 }
 
 .status {
-    font-size: 100px;
+    font-size: 2em;
     font-weight: bold;
-    letter-spacing: -2px;
-    padding-left: 25px;
-    padding-right: 10px;
     text-overflow: ellipsis;
 }
 
 .details, .commit-message {
     display: block;
-    padding-left: 25px;
-    margin-left: 5px;
+    overflow: hidden;
+    font-size: .8em;
+    text-overflow: ellipsis;
 }
 
 .health {
-    font-size: 35px;
+    font-size: .4em;
     color: #F5B800;
 }
 
 .details {
-    font-size: 35px;
     color: #F5B800;
 }
 
 .commit-message {
-    display: block;
     color: cyan;
-    font-size: 30px;
-    text-overflow: ellipsis;
-    width:70%;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.env {
-    font-size: 90px;
-    margin-right: 30px;
 }
 
 .small {
@@ -91,12 +74,24 @@ body {
     letter-spacing: normal;
 }
 
+.heading.success {
+	background-color: #00FF00;	
+}
+
 .success {
     color: #00FF00;
 }
 
+.heading.failure {
+	background-color: #FF0000;	
+}
+
 .failure {
     color: #FF0000;
+}
+
+.heading.building {
+    background-color: #3333FF;
 }
 
 .building {
@@ -111,34 +106,6 @@ body {
     -webkit-animation-direction: alternate;
 }
 
-#top-git {
-    color: yellow;
-    height: 200px;
-    position: absolute;
-    right: 100px;
-    bottom: 100px;
-    margin: 15px;
-}
-
-#top-git .total {
-    font-size: 90px;
-    text-align: left;
-}
-
-#top-git .commiter {
-    text-align: left;
-    display: block;
-    font-size: 30px;
-}
-
-#top-git .commiter.odd {
-    color: #F5B800;
-}
-
-#top-git .commiter.even {
-    color: #F5B800;
-}
-
 .people {
     float: right;
 }
@@ -147,30 +114,4 @@ body {
     width: 150px;
     height: 150px;
     padding-left: 10px;
-}
-
-.stars {
-    position: relative;
-    width: 91px;
-    height: 17px;
-    margin-left: 20px;
-}
-
-.stars .cover {
-    position: absolute;
-    background: transparent url(/images/no-stars.png) top left no-repeat;
-    top: 0px;
-    left: 0px;
-    width: 91px;
-    height: 17px;
-    z-index: 101;
-}
-
-.stars .progress {
-    position: absolute;
-    background: transparent url(/images/full-stars.png) top left no-repeat;
-    top: 0px;
-    left: 0px;
-    height: 17px;
-    z-index: 102;
 }
