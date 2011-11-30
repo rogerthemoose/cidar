@@ -76,6 +76,7 @@ body {
     color: cyan;
     font-size: 30px;
     text-overflow: ellipsis;
+    width:70%;
     white-space: nowrap;
     overflow: hidden;
 }
