@@ -68,7 +68,7 @@ class Job
 
   def buildLabel
     buildNumber = @job['lastBuild'] && @job['lastBuild']['number']
-    '#' + buildNumber.to_s + ' ' + (commiter_names() && commiter_names().first()).to_s
+    '#' + buildNumber.to_s + ' ' + (commiter_names_obfuscated() && commiter_names_obfuscated().first()).to_s
   end
 
   def status?
@@ -105,6 +105,10 @@ class Job
   end
 
   private
+
+  def commiter_names_obfuscated()
+    commiter_names.collect{|name| name.split(" ").collect{|piece| piece[0] + "*" * (piece.length - 1) }.join(" ") }
+  end
 
   def commiter_names()
     @detail['changeSet']['items'].collect { |commit| commit['author']['fullName'] }.uniq
