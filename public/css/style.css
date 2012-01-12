@@ -13,6 +13,7 @@ body {
     font-family: Helvetica;
     margin: 10px;
     width: 100%;
+	line-height: 1;
 }
 
 .jobDetails {
@@ -40,11 +41,10 @@ body {
     float: left;
     height: 150px;
     width: 150px;
-
 }
 
 .status {
-    font-size: 2em;
+    font-size: .8em;
     font-weight: bold;
     text-overflow: ellipsis;
 }
@@ -52,7 +52,7 @@ body {
 .details, .commit-message {
     display: block;
     overflow: hidden;
-    font-size: .8em;
+    font-size: .6em;
     text-overflow: ellipsis;
 }
 
