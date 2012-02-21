@@ -117,7 +117,15 @@ body {
 }
 
 .aardvark {
-    position: absolute;
-    top: 560px;
-    left: 940px;
+  position: absolute;
+  top: 560px;
+  left: 940px;
 }
+
+/*
+.status-box {
+  background-image:url(/images/aardvark.png); background-repeat:no-repeat;
+  background-position:560px 957px;
+}
+*/
+
